@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+<div class="container-flruid">
+    <div th:replace="~{plantillas/plantilla :: alerts}"></div>
+
+    <main class="container text-center col-md-10 p-4 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+        <h1 class="card-header"><strong><p th:text="${contenido}"></p></strong></h1>
+        <div class="card-body">
+            <h4 class="card-header"><strong></strong></h4>
+            <div class="card-body">
+                <form th:action="@{/clientes/buscar-cliente-tabla}" th:object=${cliente} method="post">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="nombre" style="color: white;">Nombre o Correo</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre"
+                                       placeholder="Nombre de Cliente" required="required"
+                                       th:field="*{nombre}">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <br/>
+                            <button type="submit" class="btn btn-primary">Buscar</button>
+                        </div>
+                    </div>
+                    <input type="hidden" id="idCliente" name="idCliente" th:field="*{id_cliente}"/>
+                </form>
+                <span th:if="${datos!=null}" class="d-block p-2 text-bg-dark">Cambiar datos</span>
+                <form th:if="${datos!=null}" th:action="@{/clientes/salvar-cliente}" th:object=${datos}
+                      method="post">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="nombre_1" style="color: white;">Nombre</label>
+                                <input type="text" class="form-control" id="nombre_1" name="nombre"
+                                       placeholder="Nombre de Cliente" required="required"
+                                       th:field="*{nombre}">
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="ciudad" style="color: white;">Ciudades</label>
+                                <select class="form-control" th:field="*{ciudad}" id="ciudad" name="ciudad" required>
+                                    <option th:each="cd : ${selectciudad}" th:value="${cd}" th:text="${cd}"/>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="correo" style="color: white;">Correo</label>
+                                <input type="text" class="form-control" id="correo" name="email"
+                                       placeholder="Correo del Cliente" required="required"
+                                       th:field="*{email}">
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="telefono" style="color: white;">Telefono</label>
+                                <input type="text" class="form-control" id="telefono" name="telefono"
+                                       placeholder="Teléfono del Cliente" required="required"
+                                       th:field="*{telefono}">
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="id_Cliente" name="id_Cliente" th:field="*{id_cliente}"/>
+                    <div class="col-md-3">
+                        <br/>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+<footer th:replace="~{plantillas/plantilla::footer}"></footer>
+<script th:replace="~{plantillas/plantilla::paginaScripts}"></script>
+<script th:replace="~{clientes/js/autocompletar::jscliente}"></script>
+</body>
+</html>

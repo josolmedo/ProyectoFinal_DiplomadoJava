@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+
+<div class="container-fluid">
+    <div th:if="${param.exito}" class="alert alert-success text-center">Operación realizada con éxito.</div>
+    <div th:if="${param.eliminado}" class="alert alert-warning text-center">Asignatura eliminada correctamente.</div>
+    <div th:if="${param.error}" class="alert alert-danger text-center">No se puede eliminar la asignatura porque ya tiene grupos o alumnos inscritos.</div>
+
+    <main class="container text-center col-md-10 p-4 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+        <h1 class="card-header"><strong th:text="${contenido}"></strong></h1>
+        <br>
+
+        <div class="d-flex justify-content-end mb-3">
+            <a class="btn btn-success" th:href="@{/administrador/asignaturas/nueva}">+ Agregar Asignatura</a>
+        </div>
+
+        <table th:if="${!asignaturas.isEmpty()}" class="table table-striped table-hover table-sm align-middle">
+            <thead class="table-dark table-bordered">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="asig : ${asignaturas}">
+                <td th:text="${asig.id}"></td>
+                <td th:text="${asig.nombre}"></td>
+                <td>
+                    <a th:href="@{/administrador/asignaturas/editar/{id}(id=${asig.id})}" class="btn btn-primary btn-sm">Editar</a>
+                    <a th:href="@{/administrador/asignaturas/eliminar/{id}(id=${asig.id})}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta asignatura?');">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+<footer th:replace="~{plantillas/plantilla::footer}"></footer>
+<script th:replace="~{plantillas/plantilla::paginaScripts}"></script>
+</body>
+</html>

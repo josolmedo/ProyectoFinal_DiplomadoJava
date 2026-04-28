@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+<main class="container text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    <h1 th:text="${contenido}"></h1>
+    <div class="card-body">
+        <div class="card-body">
+            <form id="form_1" th:action="@{/agregar-venta/buscar-cliente-tabla-registro}"
+                  method="post">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="nombreCliente" style="color: white;">Nombre o Correo</label>
+                            <input type="text" class="form-control" id="nombreCliente" name="nombreCliente"
+                                   placeholder="Nombre de Cliente" required="required"
+                                   th:field="${venta.nombreCliente}">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <br/>
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </div>
+                </div>
+                <input type="hidden" id="idCliente" name="idCliente" th:field="${venta.id_cliente}"/>
+            </form>
+            <span th:if="${datos!=null}" class="d-block p-2 text-bg-dark">Registrar Ventas</span>
+
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="card-body">
+            <div th:if="${datos!=null}" class="form-group">
+                <label th:text="${venta.nombreCliente}+' Total a Pagar= '+${venta.total} +' pesos'" style="color: white;font-size: 30px;"></label>
+                <div th:if="${datos!=null}" class="container mt-4">
+                    <form id="form_2" th:action="@{/agregar-venta/buscar-producto-tabla-registro}"
+                          method="post">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="nombre_2" style="color: white;">Nombre del producto</label>
+                                    <input type="text" class="form-control" id="nombre_2" name="nombre_2"
+                                           placeholder="Nombre del producto" required="required"
+                                           th:field="${venta.productoDTO.nombre}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <br/>
+                                <button type="submit" class="btn btn-primary">Agregar</button>
+                            </div>
+                            <div class="col-md-3">
+                                <a th:href="@{/agregar-venta/cerrar-venta}"
+                                   class="btn btn-success">Cerrar Venta <i class="bi bi-cart-fill"
+                                                                      aria-hidden="true"></i> </a>
+                            </div>
+                        </div>
+                        <input type="hidden" id="idProducto" name="idProducto"
+                               th:field="${venta.productoDTO.id_producto}"/>
+                    </form>
+
+                </div>
+                <div th:if="${!venta.listaCompra.isEmpty()}" class="container mt-4">
+                    <div class="table-responsive" style="max-height:200px; overflow-y:auto;">
+                        <table class="table table-striped table-hover table-sm">
+                        <thead class="table-dark table-bordered">
+                        <tr>
+                            <th scope="col"> Nombre</th>
+                            <th scope="col"> Precio</th>
+                            <th scope="col"> Stock</th>
+                            <th scope="col"> imagen</th>
+                            <th scope="col"> Operaciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="prod: ${venta.listaCompra}">
+                            <td th:text="${prod.nombre}"></td>
+                            <td th:text="${prod.precio}"></td>
+                            <td th:text="${prod.stock}"></td>
+                            <td class="align-top" width="450">
+                                <img class="img-thumbnail" th:src="@{'/imagenes/ventas/'+${prod.imagen}}" width="10%"
+                                     height="10%"><br/>
+                            </td>
+                            <td>
+                                <a th:href="@{/agregar-venta/eliminar-producto/{id} (id=${prod.id_producto})}"
+                                   class="btn btn-danger">Eliminar <i class="bi bi-trash-fill"
+                                                                        aria-hidden="true"></i> </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+<footer th:replace="~{plantillas/plantilla::footer}"></footer>
+<script th:replace="~{plantillas/plantilla::paginaScripts}"></script>
+<script th:replace="~{ventas/js/autocompletar::jscliente}"></script>
+<script th:replace="~{ventas/js/autocompletarp::producto}"></script>
+</body>
+</html>

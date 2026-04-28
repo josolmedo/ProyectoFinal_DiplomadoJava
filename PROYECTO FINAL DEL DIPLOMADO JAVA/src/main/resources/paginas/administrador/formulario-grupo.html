@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+
+<div class="container-fluid">
+    <div th:if="${param.exito}" class="alert alert-success text-center fs-5">¡Grupo creado y asignado correctamente!</div>
+    <div th:if="${error}" class="alert alert-danger text-center fs-5" th:text="${error}"></div>
+
+    <main class="container col-md-8 p-4 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+        <h1 class="card-header text-center"><strong>Crear Nuevo Grupo</strong></h1>
+        <div class="card-body">
+
+            <form th:action="@{/administrador/grupos/guardar}" th:object="${grupoDTO}" method="post">
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nombre del Grupo (Ej. 101-A):</label>
+                    <input type="text" class="form-control" th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''" th:field="*{nombre}">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Asignatura:</label>
+                        <select class="form-select" th:classappend="${#fields.hasErrors('idAsignatura')} ? 'is-invalid' : ''" th:field="*{idAsignatura}">
+                            <option value="">-- Selecciona una materia --</option>
+                            <option th:each="asig : ${asignaturas}" th:value="${asig.id}" th:text="${asig.nombre}"></option>
+                        </select>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('idAsignatura')}" th:errors="*{idAsignatura}"></div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Profesor Titular:</label>
+                        <select class="form-select" th:classappend="${#fields.hasErrors('idProfesor')} ? 'is-invalid' : ''" th:field="*{idProfesor}">
+                            <option value="">-- Selecciona un profesor --</option>
+                            <option th:each="prof : ${profesores}" th:value="${prof.id}" th:text="${prof.usuario.nombre} + ' ' + ${prof.usuario.apellido}"></option>
+                        </select>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('idProfesor')}" th:errors="*{idProfesor}"></div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-save"></i> Guardar Grupo</button>
+                </div>
+            </form>
+
+        </div>
+    </main>
+</div>
+<footer th:replace="~{plantillas/plantilla::footer}"></footer>
+<script th:replace="~{plantillas/plantilla::paginaScripts}"></script>
+</body>
+</html>
