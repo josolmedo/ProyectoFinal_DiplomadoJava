@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+    <header th:replace="~{plantillas/plantilla :: header}"></header>
+    <main class="container text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+        <div th:replace="~{plantillas/plantilla :: alerts}"></div>
+        <h1 th:text="${contenido}"></h1>
+        <form th:action="@{/clientes/salvar-cliente}" th:object=${datos}
+              method="post">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="nombre_1" style="color: white;">Nombre</label>
+                        <input type="text" class="form-control" id="nombre_1" name="nombre"
+                               placeholder="Nombre de Cliente" required="required"
+                               th:field="*{nombre}">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="ciudad" style="color: white;">Ciudades</label>
+                        <select class="form-control" th:field="*{ciudad}" id="ciudad" name="ciudad" required>
+                            <option th:each="cd : ${selectciudad}" th:value="${cd}" th:text="${cd}"/>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="correo" style="color: white;">Correo</label>
+                        <input type="text" class="form-control" id="correo" name="email"
+                               placeholder="Correo del Cliente" required="required"
+                               th:field="*{email}">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="telefono" style="color: white;">Telefono</label>
+                        <input type="text" class="form-control" id="telefono" name="telefono"
+                               placeholder="Teléfono del Cliente" required="required"
+                               th:field="*{telefono}">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <br/>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
+
+    </main>
+    <footer th:replace="~{plantillas/plantilla::footer}"></footer>
+    <script th:replace="~{plantillas/plantilla::paginaScripts}"></script>
+</body>
+</html>

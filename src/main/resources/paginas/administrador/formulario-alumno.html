@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+
+<div class="container-fluid">
+
+    <div th:if="${param.exito}" class="alert alert-success text-center fs-5">
+        ¡Alumno registrado correctamente en el sistema!
+    </div>
+
+    <div th:if="${error}" class="alert alert-danger text-center fs-5" th:text="${error}"></div>
+
+    <main class="container text-center col-md-6 p-4 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+        <h1 class="card-header"><strong>Alta de Nuevo Alumno</strong></h1>
+        <div class="card-body">
+
+            <form th:action="@{/administrador/usuarios/guardar-alumno}" th:object="${usuarioDTO}" method="post">
+
+                <div class="form-group text-start mb-3">
+                    <label for="nombre" class="form-label fw-bold">Nombre:</label>
+                    <input type="text" class="form-control" th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''" id="nombre" name="nombre" placeholder="Nombre del alumno" th:field="*{nombre}">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                </div>
+
+                <div class="form-group text-start mb-3">
+                    <label for="apellido" class="form-label fw-bold">Apellidos:</label>
+                    <input type="text" class="form-control" th:classappend="${#fields.hasErrors('apellido')} ? 'is-invalid' : ''" id="apellido" name="apellido" placeholder="Apellidos" th:field="*{apellido}">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></div>
+                </div>
+
+                <div class="form-group text-start mb-3">
+                    <label for="email" class="form-label fw-bold">Correo Institucional:</label>
+                    <input type="email" class="form-control" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''" id="email" name="email" placeholder="ejemplo@alumnos.local" th:field="*{email}">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                </div>
+
+                <div class="form-group text-start mb-4">
+                    <label for="password" class="form-label fw-bold">Contraseña Temporal:</label>
+                    <input type="password" class="form-control" th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''" id="password" name="password" placeholder="Asigna una contraseña" th:field="*{password}">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                </div>
+
+                <input type="hidden" id="idRol" name="idRol" value="3" />
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success btn-lg">Registrar Alumno</button>
+                </div>
+            </form>
+
+        </div>
+    </main>
+</div>
+<footer th:replace="~{plantillas/plantilla::footer}"></footer>
+<script th:replace="~{plantillas/plantilla::paginaScripts}"></script>
+</body>
+</html>

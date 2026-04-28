@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+
+<div class="container-fluid">
+    <div th:if="${param.exito}" class="alert alert-success text-center fs-5">¡Alumno inscrito al grupo correctamente!</div>
+    <div th:if="${error}" class="alert alert-danger text-center fs-5" th:text="${error}"></div>
+
+    <main class="container col-md-8 p-4 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+        <h1 class="card-header text-center"><strong>Inscribir Alumno a Materia</strong></h1>
+        <div class="card-body">
+
+            <form th:action="@{/administrador/inscribir/guardar}" th:object="${inscripcionDTO}" method="post">
+
+                <div class="row mt-3">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Selecciona al Alumno:</label>
+                        <select class="form-select" th:classappend="${#fields.hasErrors('idAlumno')} ? 'is-invalid' : ''" th:field="*{idAlumno}">
+                            <option value="">-- Elige un alumno --</option>
+                            <option th:each="alum : ${alumnos}"
+                                    th:value="${alum.id}"
+                                    th:text="${alum.usuario.nombre} + ' ' + ${alum.usuario.apellido} + ' (' + ${alum.usuario.email} + ')'"></option>
+                        </select>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('idAlumno')}" th:errors="*{idAlumno}"></div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Grupo / Materia:</label>
+                        <select class="form-select" th:classappend="${#fields.hasErrors('idGrupo')} ? 'is-invalid' : ''" th:field="*{idGrupo}">
+                            <option value="">-- Elige un grupo --</option>
+                            <option th:each="grup : ${grupos}"
+                                    th:value="${grup.id}"
+                                    th:text="${grup.asignatura.nombre} + ' - Grupo: ' + ${grup.nombre}"></option>
+                        </select>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('idGrupo')}" th:errors="*{idGrupo}"></div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-success btn-lg"><i class="bi bi-person-plus"></i> Inscribir Alumno</button>
+                </div>
+            </form>
+
+        </div>
+    </main>
+</div>
+<footer th:replace="~{plantillas/plantilla::footer}"></footer>
+<script th:replace="~{plantillas/plantilla::paginaScripts}"></script>
+</body>
+</html>

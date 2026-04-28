@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+<div class="container-fluid">
+
+    <div th:if="${param.exito}" class="alert alert-success text-center">
+        ¡Asistencia registrada con éxito!
+    </div>
+    <div th:if="${error}" class="alert alert-danger text-center" th:text="${error}"></div>
+
+    <main class="container text-center col-md-8 p-4 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+        <h1 class="card-header"><strong>Registrar Asistencia</strong></h1>
+        <div class="card-body">
+
+            <div th:if="${param.correoExito}" class="alert alert-success text-center">¡Reporte de asistencias enviado a tu correo!</div>
+            <div th:if="${param.correoError}" class="alert alert-danger text-center">Hubo un problema al enviar el correo.</div>
+
+            <div class="d-flex justify-content-end mb-4 gap-2">
+                <a class="btn btn-outline-danger" th:href="@{/alumnos/descargar-asistencias}">
+                    <i class="bi bi-file-earmark-pdf"></i> Descargar Historial
+                </a>
+                <a class="btn btn-outline-primary" th:href="@{/alumnos/enviar-asistencias}">
+                    <i class="bi bi-envelope"></i> Enviar a mi correo
+                </a>
+            </div>
+
+            <form th:action="@{/alumnos/registrar-asistencia}" th:object="${asistenciaDTO}" method="post">
+                <div class="row justify-content-center">
+
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group text-start">
+                            <label for="fecha" class="form-label fw-bold">Fecha de Asistencia:</label>
+                            <input type="date" class="form-control" th:classappend="${#fields.hasErrors('fecha')} ? 'is-invalid' : ''" id="fecha" name="fecha" th:field="*{fecha}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group text-start">
+                            <label for="idGrupo" class="form-label fw-bold">Grupo:</label>
+                            <select class="form-select" th:classappend="${#fields.hasErrors('idGrupo')} ? 'is-invalid' : ''" id="idGrupo" name="idGrupo" th:field="*{idGrupo}">
+                                <option value="" selected>Selecciona una de tus materias...</option>
+                                <option th:each="inscripcion : ${misInscripciones}"
+                                        th:value="${inscripcion.grupo.id}"
+                                        th:text="${inscripcion.grupo.asignatura.nombre} + ' (' + ${inscripcion.grupo.nombre} + ')'"></option>
+                            </select>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('idGrupo')}" th:errors="*{idGrupo}"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-12 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">Guardar Asistencia</button>
+                </div>
+            </form>
+
+        </div>
+    </main>
+</div>
+<footer th:replace="~{plantillas/plantilla::footer}"></footer>
+<script th:replace="~{plantillas/plantilla::paginaScripts}"></script>
+</body>
+</html>

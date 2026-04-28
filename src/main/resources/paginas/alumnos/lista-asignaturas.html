@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+
+<div class="container-fluid">
+    <div th:replace="~{plantillas/plantilla :: alerts}"></div>
+
+    <div th:if="${param.correoExito}" class="alert alert-success text-center">¡Reporte enviado a tu correo institucional!</div>
+    <div th:if="${param.correoError}" class="alert alert-danger text-center">Hubo un problema al enviar el correo.</div>
+
+    <main class="container text-center col-md-10 p-4 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+        <h1 class="card-header"><strong th:text="${contenido}">Asignaturas</strong></h1>
+        <br>
+
+        <div class="d-flex justify-content-end mb-3 gap-2">
+            <a class="btn btn-danger" th:href="@{/alumnos/descargar-calificaciones}">
+                <i class="bi bi-file-earmark-pdf"></i> Descargar PDF
+            </a>
+            <a class="btn btn-primary" th:href="@{/alumnos/enviar-calificaciones}">
+                <i class="bi bi-envelope"></i> Enviar a mi correo
+            </a>
+        </div>
+
+        <table th:if="${!inscripciones.isEmpty()}" class="table table-striped table-hover table-sm">
+            <thead class="table-dark table-bordered">
+            <tr>
+                <th scope="col">Asignatura</th>
+                <th scope="col">Grupo</th>
+                <th scope="col">Calificación</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="inscripcion : ${inscripciones}">
+                <td th:text="${inscripcion.grupo.asignatura.nombre}"></td>
+                <td th:text="${inscripcion.grupo.nombre}"></td>
+                <td th:text="${inscripcion.calificacion != null ? inscripcion.calificacion : 'Sin calificar'}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${inscripciones.isEmpty()}" class="alert alert-info mt-4" role="alert">
+            Aún no tienes asignaturas registradas en tu carga académica.
+        </div>
+
+    </main>
+</div>
+
+<footer th:replace="~{plantillas/plantilla::footer}"></footer>
+<script th:replace="~{plantillas/plantilla::paginaScripts}"></script>
+</body>
+</html>

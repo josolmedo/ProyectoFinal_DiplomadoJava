@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+<div class="container-fluid">
+    <div th:replace="~{plantillas/plantilla :: alerts}"></div>
+
+    <main class="container text-center col-md-10 p-4 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+        <h1 th:text="${contenido}"></h1>
+    </main>
+</div>
+<footer th:replace="~{plantillas/plantilla::footer}"></footer>
+<div th:replace="~{plantillas/plantilla::paginaScripts}"></div>
+</body>
+</html>

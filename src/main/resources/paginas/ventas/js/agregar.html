@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<body>
+<script type="text/javascript" th:fragment="agregar">
+    let index = 0;
+      function agregarItem(){
+          fetch("/agregar-venta/agregar-fragmento/" + index)
+              .then(r => r.text())
+              .then(html => {
+
+                  document
+                  .getElementById("itemsContainer")
+                  .insertAdjacentHTML("beforeend", html);
+
+                  index++;
+
+              });
+
+      }
+
+      function eliminar(btn){
+          btn.closest(".item-row").remove();
+      }
+</script>
+</body>
+</html>

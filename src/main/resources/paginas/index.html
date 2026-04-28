@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="~{plantillas/plantilla :: head}">
+    <div>
+    <meta http-equiv="refresh" content="5;URL=http://localhost:8080/principal">
+    </div>
+</head>
+<body>
+<div class="container-fluid">
+    <main class="container text-center col-md-10 p-4 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+        <div class="container text-center">
+            <br/> <img th:src="@{/image/escuela.gif}" height="200" width="300"/>
+            <br/>
+            <br/>
+            <h2>EscuRed</h2>
+            <br/>
+            <br/>
+            <h3>Cargando módulos del sistema...</h3>
+        </div>
+    </main>
+</div>
+</body>
+</html>

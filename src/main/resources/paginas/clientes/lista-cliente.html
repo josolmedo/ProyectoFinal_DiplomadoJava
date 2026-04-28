@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="~{plantillas/plantilla :: head}"></head>
+<body>
+<header th:replace="~{plantillas/plantilla :: header}"></header>
+<div class="container-flruid">
+    <div th:replace="~{plantillas/plantilla :: alerts}"></div>
+
+    <main class="container text-center col-md-10 p-4 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+        <h1 th:text="${contenido}"></h1>
+
+
+        <table th:if="${!clientes.isEmpty()}" class="table table-striped table-hover table-sm">
+            <div class="d-flex justify-content-end">
+                <a class="btn btn-primary" th:href="@{/clientes/clientes-pdf(format=pdf)}" target="_blank" role="button">Sacar PDF</a>
+            </div>
+           <nav th:replace="~{plantillas/pag-nav::paginador}"/>
+
+            <thead class="table-dark table-bordered">
+            <tr>
+                <th scope="col"> Nombre</th>
+                <th scope="col"> Email</th>
+                <th scope="col"> Teléfono</th>
+                <th scope="col"> Ciudad</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="clie: ${clientes}">
+                <td th:text="${clie.nombre}"></td>
+                <td th:text="${clie.email}"></td>
+                <td th:text="${clie.telefono}"></td>
+                <td th:text="${clie.ciudad}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </main>
+</div>
+<footer th:replace="~{plantillas/plantilla::footer}"></footer>
+<div th:replace="~{plantillas/plantilla::paginaScripts}"></div>
+</body>
+</html>
