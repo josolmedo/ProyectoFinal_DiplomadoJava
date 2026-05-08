@@ -4,7 +4,7 @@ EscuRed es una plataforma integral desarrollada en Java 17 utilizando el framewo
 
 ---
 
-## 🚀 Características Principales
+## Características Principales
 
 * **Gestión Multi-Perfil:** Control de acceso basado en roles (Administrador, Profesor, Alumno, Padre de Familia).
 * **Seguridad Avanzada:** Autenticación mediante JWT con doble token (Access y Refresh) almacenados en Cookies seguras.
@@ -17,7 +17,7 @@ EscuRed es una plataforma integral desarrollada en Java 17 utilizando el framewo
 
 ---
 
-## 🛠️ Stack Tecnológico
+## Stack Tecnológico
 
 * **Lenguaje:** Java 17
 * **Framework Principal:** Spring Boot 3.x
@@ -30,7 +30,7 @@ EscuRed es una plataforma integral desarrollada en Java 17 utilizando el framewo
 ---
 
 
-## 📂 Estructura de Paquetes
+## Estructura de Paquetes
 
 * `dgtic.core.config`: Configuraciones de Beans, MVC y Seguridad.
 * `dgtic.core.controller`: Controladores para vistas Thymeleaf y Endpoints REST.
@@ -43,34 +43,35 @@ EscuRed es una plataforma integral desarrollada en Java 17 utilizando el framewo
 
 ---
 
-## Ejecución del Proyecto
+## Instalación y Despliegue
 
-### Prerrequisitos
-1. **Java JDK 17** instalado en el sistema.
-2. **MariaDB** instalado y en ejecución en el puerto `3306`.
-3. **Maven** instalado (opcional si se usa el wrapper incluido).
-4. Configurar las credenciales de la base de datos en `src/main/resources/application.properties`:
-   ```properties
-   spring.datasource.url=jdbc:mariadb://localhost:3306/escuela
-   spring.datasource.username=TU_USUARIO
-   spring.datasource.password=TU_PASSWORD
+### Requisitos Previos
+1.  **JDK 17** o superior.
+2.  **MariaDB** instalado y corriendo.
+3.  **Maven** instalado.
 
-Pasos para iniciar la aplicación
-Clona o extrae el código fuente del proyecto.
+### Configuración de Base de Datos
+1.  Accede a tu gestor de MariaDB y crea la base de datos:
+    ```sql
+    CREATE DATABASE escuela;
+    ```
+2.  Configura las credenciales en el archivo `src/main/resources/application.properties`:
+    ```properties
+    spring.datasource.username=tu_usuario
+    spring.datasource.password=tu_password
+    ```
 
-Abre una terminal y navega a la raíz del proyecto.
+### Ejecución
+1.  Clona el repositorio o descarga el código.
+2.  Compila y ejecuta el proyecto con Maven:
+    ```bash
+    mvn spring-boot:run
+    ```
+3.  La aplicación estará disponible en: [http://localhost:8080](http://localhost:8080)
 
-Ejecuta el siguiente comando para limpiar y compilar el proyecto (ejemplo en sistemas basados en Debian/Linux o Windows):
+> **Nota:** El sistema utiliza `data.sql` para cargar automáticamente los roles y usuarios de prueba (Admin, Profesor, Alumno) al primer arranque.
 
-Bash
-mvn clean install
-Inicia la aplicación con:
-
-Bash
-mvn spring-boot:run
-(Nota: El archivo data.sql se ejecutará automáticamente insertando roles, usuarios y registros de prueba iniciales).
-
-Abre un navegador web y dirígete a: http://localhost:8080/
+---
 
 Manual de Uso y Flujo de la Aplicación
 El sistema basa su navegación en un control de acceso por roles. Dependiendo del usuario autenticado, el menú de navegación (Navbar) presentará diferentes opciones.
@@ -104,3 +105,20 @@ Notificaciones: El profesor puede generar la "Boleta" en PDF de un alumno y util
 Asistencias: Selecciona la materia del día y registra su asistencia. El sistema valida que no existan registros duplicados para la misma fecha y grupo.
 
 Historial: Puede descargar un reporte PDF con todo su récord de asistencias o enviarlo a su correo institucional.
+
+---
+
+## Detalles de Seguridad
+
+El sistema utiliza un esquema **Stateless**:
+1.  **Login:** El usuario envía credenciales, el servidor valida y genera un **Access Token** (15 min) y un **Refresh Token** (7 días).
+2.  **Cookies:** Los tokens se envían al navegador en Cookies con bandera `HttpOnly`, lo que impide el acceso desde JavaScript y mitiga ataques XSS.
+3.  **Filtro:** Cada petición es interceptada por `JWTAuthenticationFilter`, que valida la firma del token antes de autorizar el acceso a la vista.
+
+---
+
+## Autores y Créditos
+
+* **Desarrollador:** José Ángel Olmedo Guevara
+* **Institución:** UNAM - DGTIC
+* **Módulo:** Spring Security (Diplomado Java)
