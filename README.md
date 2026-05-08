@@ -2,12 +2,44 @@
 
 EscuRed es una plataforma integral desarrollada en Java 17 utilizando el framework Spring Boot. Está diseñada para administrar el flujo operativo de una institución educativa, permitiendo la gestión de alumnos, profesores, asignaturas, inscripciones, control de asistencias y generación automatizada de reportes en PDF con envío por correo electrónico.
 
-## Arquitectura y Tecnologías
-* **Backend:** Spring Boot (Web, Data JPA, Security, Mail, Validation).
-* **Seguridad:** JSON Web Tokens (JWT) con Refresh Tokens, implementado a través de Cookies seguras (HttpOnly) para integración fluida con la capa de vistas.
-* **Frontend:** Thymeleaf, HTML5, Bootstrap 5.
-* **Base de Datos:** MariaDB.
-* **Herramientas Adicionales:** Lombok, OpenPDF para reportes, Maven.
+---
+
+## 🚀 Características Principales
+
+* **Gestión Multi-Perfil:** Control de acceso basado en roles (Administrador, Profesor, Alumno, Padre de Familia).
+* **Seguridad Avanzada:** Autenticación mediante JWT con doble token (Access y Refresh) almacenados en Cookies seguras.
+* **Módulo Académico:** CRUD completo de alumnos, profesores, asignaturas y grupos.
+* **Control de Inscripciones:** Proceso de matriculación de alumnos en grupos específicos.
+* **Pase de Lista:** Registro de asistencia diaria con validación de duplicidad por fecha.
+* **Evaluación Continua:** Gestión de calificaciones por parte de los profesores.
+* **Reportes Automáticos:** Generación de boletas e historiales en PDF mediante **OpenPDF**.
+* **Notificaciones Email:** Envío de reportes adjuntos vía SMTP (JavaMailSender).
+
+---
+
+## 🛠️ Stack Tecnológico
+
+* **Lenguaje:** Java 17
+* **Framework Principal:** Spring Boot 3.x
+* **Seguridad:** Spring Security 6.x + JJWT (0.11.5)
+* **Persistencia:** Spring Data JPA + MariaDB 11
+* **Frontend:** Thymeleaf + Bootstrap 5 + jQuery
+* **Gestión de Dependencias:** Maven
+* **Otras Librerías:** Lombok, MapStruct, OpenPDF
+
+---
+
+
+## 📂 Estructura de Paquetes
+
+* `dgtic.core.config`: Configuraciones de Beans, MVC y Seguridad.
+* `dgtic.core.controller`: Controladores para vistas Thymeleaf y Endpoints REST.
+* `dgtic.core.model`:
+    * `.entity`: Entidades de persistencia JPA.
+    * `.dto`: Objetos de transferencia de datos con validaciones.
+* `dgtic.core.repository`: Interfaces de acceso a datos (Spring Data).
+* `dgtic.core.service`: Capa de lógica de negocio e integraciones.
+* `dgtic.core.security`: Implementación de filtros y proveedores JWT.
 
 ---
 
