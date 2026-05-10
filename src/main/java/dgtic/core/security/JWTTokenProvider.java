@@ -35,7 +35,7 @@ public class JWTTokenProvider {
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
 
         return Jwts.builder()
-                .setSubject(userDetails.getUsername()) // Corregido para 0.11.5
+                .setSubject(userDetails.getUsername())
                 .claim(TOKEN_TYPE_CLAIM, TOKEN_TYPE_ACCESS)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
@@ -48,16 +48,16 @@ public class JWTTokenProvider {
         Date expiryDate = new Date(now.getTime() + refreshExpirationInMs);
 
         return Jwts.builder()
-                .setSubject(userDetails.getUsername()) // Corregido para 0.11.5
+                .setSubject(userDetails.getUsername())
                 .claim(TOKEN_TYPE_CLAIM, TOKEN_TYPE_REFRESH)
-                .setIssuedAt(now)                      // Corregido para 0.11.5
-                .setExpiration(expiryDate)             // Corregido para 0.11.5
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
                 .signWith(getKey())
                 .compact();
     }
 
     public String getUsernameFromJWT(String token) {
-        // Sintaxis correcta de Parser para 0.11.5
+
         return Jwts.parserBuilder()
                 .setSigningKey(getKey())
                 .build()
@@ -68,7 +68,7 @@ public class JWTTokenProvider {
 
     public boolean validateToken(String token, String expectedType) {
         try {
-            // Sintaxis correcta de Parser para 0.11.5
+
             Claims claims = Jwts.parserBuilder()
                     .setSigningKey(getKey())
                     .build()
